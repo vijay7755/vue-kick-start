@@ -1,5 +1,6 @@
 <script setup>
 import { defineProps, ref, computed, watch, onMounted } from 'vue';
+import { useFullName } from '@/composables/useFullName'
 
 const props = defineProps({
     title: {
@@ -18,33 +19,35 @@ const props = defineProps({
     },
 })
 
-// Create local ref
-const localFirstName = ref(props.firstName)
-const localLastName = ref(props.lastName)
+// // Create local ref
+// const localFirstName = ref(props.firstName)
+// const localLastName = ref(props.lastName)
 
-// Watch to sync localref with props whenever props change
-watch(() => props.firstName, (newValue) => {
-    localFirstName.value = newValue
-})
-watch(() => props.lastName, (newValue) => {
-    localLastName.value = newValue
-})
+// // Watch to sync localref with props whenever props change
+// watch(() => props.firstName, (newValue) => {
+//     localFirstName.value = newValue
+// })
+// watch(() => props.lastName, (newValue) => {
+//     localLastName.value = newValue
+// })
 
-// Compute method to concadinate fullname
-const fullName = computed({
-    get() {
-        return `${localFirstName.value} ${localLastName.value}`
-    },
-    set(newValue) {
-        const [first, last] = newValue.split(' ')
-        localFirstName.value = first || ''
-        localLastName.value = last || ''
-    }
-})
+// // Compute method to concadinate fullname
+// const fullName = computed({
+//     get() {
+//         return `${localFirstName.value} ${localLastName.value}`
+//     },
+//     set(newValue) {
+//         const [first, last] = newValue.split(' ')
+//         localFirstName.value = first || ''
+//         localLastName.value = last || ''
+//     }
+// })
 
-onMounted(() => {
-    if (!props.firstName && !props.lastName) fullName.value = "Vijay Krishnan"
-})
+// onMounted(() => {
+//     if (!props.firstName && !props.lastName) fullName.value = "Vijay Krishnan"
+// })
+
+const { fullName } = useFullName(props)
 
 </script>
 
